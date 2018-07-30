@@ -2,7 +2,7 @@ package rui.coder.algorithms.leetcode.to_interview_questions_easy.array;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class IntersectTest {
 
