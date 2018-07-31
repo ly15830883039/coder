@@ -8,6 +8,7 @@ class FindNum {
      * @param numbs 数组的内容
      * @return 唯一出现过一次的数
      */
+    @SuppressWarnings("unused")
     int findNum(int size, int[] numbs){
        int a=0;
        int b=0;
