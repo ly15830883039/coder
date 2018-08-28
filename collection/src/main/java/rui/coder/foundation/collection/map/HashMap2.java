@@ -1,10 +1,9 @@
-package rui.coder.algorithms.java.hash;
+package rui.coder.foundation.collection.map;
 
 import lombok.AllArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 
 /**
@@ -133,6 +132,20 @@ public class HashMap2<K, V> implements Serializable {
      */
     transient Node<K, V>[] table;
 
+    /**
+     * k-v 这个结构一共有多少个
+     */
+    transient int size;
+    /**
+     * 这个数是 HashMap中结构改变过几次。
+     *
+     * 结构改变 是指 吸怪了hash的映射数量，或者修改了内部的结构，比如说进行了rehash的操作。
+     *
+     * 这个参数是用于 让一些迭代器能够 快速失败。
+     *
+     */
+    transient int modCount;
+
     public HashMap2(int initialCapacity, float loadFactor) {
         //初始化大小非负数
         if (initialCapacity < 0)
@@ -160,31 +173,134 @@ public class HashMap2<K, V> implements Serializable {
     /**
      *
      * @param hash key的hash值
-     * @param key
-     * @param value
-     * @param onlyIfAbsent
-     * @param evict
-     * @return
+     * @param key key
+     * @param value value
+     * @param onlyIfAbsent 如果是true 将不改变原来的值
+     * @param evict 如果是false ，这个表将是创建模式
+     * @return 之前的值，或者为空。
      */
     final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
         Node<K, V>[] tab;
         Node<K, V> p;
         int n, i;
 
-        //table为空，或者长度为n
+        //table为空，或者长度为n·
         if (( tab = table) == null || (n=tab.length)==0) {
             //初始化
-//            tab = resize();
+            tab = resize();
             n = tab.length;
         }
 
-        //
-        if((p=tab[i=(n-1)&hash])==null){
+        //i=(n-1)&hash 是计算在那个桶的算法
+        if((p=tab[i=(n-1)&hash])==null){  //判断桶中没有数据
+            //创建一个新节点，并赋予到桶中
+            tab[i]=newNode(hash,key,value,null);
 
+        }else{//这个桶中有数据
+            Node<K,V> e; K k;
+            //如果这个桶中的Node的hash和我们运算出来的key的hash值相同。
+            //并且
+            //      桶中节点的key和我们的key为同一个 或者 （入参key 不为空同时，入参key的和桶中节点的key相同 ）
+            if(p.hash==hash &&
+                    ((k=p.key)==key|| (key !=null && key.equals(k)))){
+                e=p;
+            }else if(p instanceof TreeNode){//桶中节点 为 TreeNode结构
+                //往 Tree 节点中添加value
+                e=((TreeNode<K,V>)p).putTreeVal(this,tab,hash,key,value);
+            }else{
+                //从1开始，然后自增
+                for (int binCount = 0; ; ++binCount) {
+                    if ((e = p.next) == null) {//如果 桶中节点下一个为空
+                        //将新节点赋予桶中节点的链上
+                        p.next = newNode(hash, key, value, null);
+                        //如果 链表的长度大于 等于 tree -1，将 链表转换为 TreeNode
+                        if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
+                            treeifyBin(tab, hash);
+                        break;
+                    }
+                    // 桶中节点中的链next不为空 并且
+                    //       桶中节点的key和next的key相同，或者 输入key不为空，且输入key和next的key相同
+
+                    if (e.hash == hash &&
+                            ((k = e.key) == key || (key != null && key.equals(k)))) {
+                        break;//跳出循环
+                    }
+                    //将最新的next链节点的地址替换了桶的地址
+                    p = e;
+                }
+            }
+            //如果 e 不为空，可知  已经存在了这个映射关系,即这个key重复了
+            if (e != null) { // existing mapping for key
+                //取出旧的值来
+                V oldValue = e.value;
+                //onlyIfAbsent 为  只有在缺少的情况下,默认put为false
+                //所以这一步直接执行
+                if (!onlyIfAbsent || oldValue == null)//替换旧值
+                    e.value = value;
+                afterNodeAccess(e);
+                return oldValue;
+            }
+
+        }
+        //这个数改变了，说明了说明了什么，结构变了，其他相关迭代的就会失败
+        ++modCount;
+        if (++size > threshold)//如果这个大小超过了预设范围，将进行扩容
+            resize();
+
+        afterNodeInsertion(evict);
+        return null;
+    }
+
+    private void afterNodeInsertion(boolean evict) {
+    }
+
+    private void afterNodeAccess(Node<K,V> e) {
+    }
+
+    private void treeifyBin(Node<K,V>[] tab, int hash) {
+    }
+
+    private Node<K,V> newNode(int hash, K key, V value, Object o) {
+        //TODO
+        return null;
+    }
+
+    private Node<K,V>[] resize() {
+        Node<K,V>[] oldTab = table;
+
+        int oldCap = (oldTab == null) ? 0 : oldTab.length;
+        int oldThr = threshold;
+        int newCap, newThr = 0;
+
+        if (oldCap > 0) {
+            if (oldCap >= MAXIMUM_CAPACITY) {
+                threshold = Integer.MAX_VALUE;
+                return oldTab;
+            }
+            else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY &&
+                    oldCap >= DEFAULT_INITIAL_CAPACITY)
+                newThr = oldThr << 1; // double threshold
+        } else if (oldThr > 0) // initial capacity was placed in threshold
+            newCap = oldThr;
+        else {               // zero initial threshold signifies using defaults
+            newCap = DEFAULT_INITIAL_CAPACITY;
+            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
         }
 
 
+        if (newThr == 0) {
+            float ft = (float)newCap * loadFactor;
+            newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ?
+                    (int)ft : Integer.MAX_VALUE);
+        }
+
+        //TODO
+        return null;
     }
+
+    /*
+
+     */
 
     @AllArgsConstructor
     static class Node<K, V> implements Map.Entry<K, V> {
@@ -245,5 +361,23 @@ public class HashMap2<K, V> implements Serializable {
         }
     }
 
+    static class Entry<K,V> extends HashMap2.Node<K,V> {
+        Entry<K,V> before, after;
+        Entry(int hash, K key, V value, HashMap2.Node<K,V> next) {
+            super(hash, key, value, next);
+        }
+    }
+
+    static final class TreeNode<K,V> extends Entry<K,V>{
+
+        TreeNode(int hash, K key, V value, Node<K, V> next) {
+            super(hash, key, value, next);
+        }
+
+
+        public Node<K,V> putTreeVal(HashMap2<K, V> kvHashMap2, Node<K, V>[] tab, int hash, K key, V value) {
+            return  null;
+        }
+    }
 
 }
