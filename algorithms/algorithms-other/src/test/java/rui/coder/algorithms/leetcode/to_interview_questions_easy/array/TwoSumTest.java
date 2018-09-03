@@ -1,41 +1,58 @@
 package rui.coder.algorithms.leetcode.to_interview_questions_easy.array;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class TwoSumTest {
 
-    private TwoSum twoSum=new TwoSum();
+    private TwoSum twoSum = new TwoSum();
 
     private int[] nums;
     private int target;
+
+    private int[] result;
+
     @Test
     void case1() {
-        nums=new int[]{2, 7, 11, 15};
+        nums = new int[]{2, 7, 11, 15};
         target = 9;
-        assertArrayEquals(new int[]{0,1},twoSum.twoSum(nums, target));
+        result = new int[]{0, 1};
     }
 
     @Test
     void case2() {
-        nums=new int[]{-1,-2,-3,-4,-5};
+        nums = new int[]{-1, -2, -3, -4, -5};
         target = -8;
-        assertArrayEquals(new int[]{2,4},twoSum.twoSum(nums, target));
+        result = new int[]{2, 4};
     }
 
     @Test
-    void case3(){
-        nums=new int[]{3,2,4};
+    void case3() {
+        nums = new int[]{3, 2, 4};
         target = 6;
-        assertArrayEquals(new int[]{1,2},twoSum.twoSum(nums, target));
+        result = new int[]{1, 2};
     }
 
     @Test
-    void case4(){
-        nums=new int[]{3,2,3};
+    void case4() {
+        nums = new int[]{3, 2, 3};
         target = 6;
-        assertArrayEquals(new int[]{0,2},twoSum.twoSum(nums, target));
+        result = new int[]{0, 2};
+    }
+
+    @Test
+    void case5() {
+        nums = new int[]{3, 3};
+        target = 6;
+        result = new int[]{0, 1};
+    }
+
+    @AfterEach
+    void tearDown() {
+        assertArrayEquals(result, twoSum.twoSum(nums, target));
+        assertArrayEquals(result, twoSum.twoSum2(nums, target));
     }
 
     /*

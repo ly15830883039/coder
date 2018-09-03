@@ -1,8 +1,6 @@
 package rui.coder.algorithms.leetcode.to_interview_questions_easy.array;
 
-import java.util.HashMap;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /**
@@ -22,21 +20,71 @@ import java.util.stream.IntStream;
 public class TwoSum {
     public int[] twoSum(int[] nums, int target) {
         //使用 hashMap 这个数据结构的原因是 为了保留nums 中的所以顺序。
-        HashMap<Integer, Integer> hashMap = IntStream.range(0, nums.length)
-                .boxed()
-                .collect(Collectors.toMap(i -> nums[i]
-                        , i -> i
-                        , (a, b) -> b
-                        , HashMap::new));
+
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        IntStream.range(0, nums.length).forEachOrdered(i -> {
+            int num = nums[i];
+            if (map.get(num) == null) {
+                map.put(num, Collections.singletonList(i));
+            } else {
+                map.put(num, Arrays.asList(map.get(num).get(0), i));
+            }
+        });
 
 
-       Set<Integer> keySet=hashMap.keySet();
+        Set<Integer> keySet = map.keySet();
         for (Integer integer : keySet) {
-            int diff=target-integer;
-            if(keySet.contains(diff)){
-                return new int[]{hashMap.get(integer),hashMap.get(diff)};
+            int diff = target - integer;
+            if (keySet.contains(diff)) {
+
+                if (diff == integer) {
+                    return new int[]{map.get(integer).get(0), map.get(diff).get(1)};
+                }
+
+                return new int[]{map.get(integer).get(0), map.get(diff).get(0)};
             }
         }
         return new int[]{};
+    }
+
+    public int[] twoSum2(int[] nums, int target) {
+        int[] sortNums = nums.clone();
+        Arrays.sort(sortNums);
+
+        int small = 0;
+        int bigger = nums.length - 1;
+
+        while (small < bigger) {
+            int sumTemp = sortNums[small] + sortNums[bigger];
+            if (sumTemp == target) {
+
+                break;
+            } else if (sumTemp < target) {
+                small++;
+            } else {
+                bigger--;
+            }
+        }
+
+        int first = sortNums[small];
+        int last = sortNums[bigger];
+
+        int[] result=new int[2];
+
+        int i=0;
+        int j=0;
+        while(i<=nums.length-1){
+            int num=nums[i];
+            if(num==first||num==last){
+                result[j++]=i;
+            }
+            i++;
+            if(j==2){
+                break;
+            }
+        }
+        return result;
+
+
     }
 }
