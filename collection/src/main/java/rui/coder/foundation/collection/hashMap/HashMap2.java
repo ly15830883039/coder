@@ -1,4 +1,4 @@
-package rui.coder.algorithms.java.hash;
+package rui.coder.foundation.collection.hashMap;
 
 import lombok.AllArgsConstructor;
 
