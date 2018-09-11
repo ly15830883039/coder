@@ -30,8 +30,27 @@ class ReverseTest {
         expect=21;
     }
 
+    @Test
+    void case4() {
+        source=0;
+        expect=0;
+    }
+
+    @Test
+    void case5() {
+        source=1534236469;
+        expect=0;
+    }
+
+    @Test
+    void case6() {
+        source=901000;
+        expect=109;
+    }
+
     @AfterEach
     void tearDown() {
         assertEquals(expect, reverse.reverse(source));
+        assertEquals(expect, reverse.reverse2(source));
     }
 }
