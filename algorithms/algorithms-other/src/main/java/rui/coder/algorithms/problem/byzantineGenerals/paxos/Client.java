@@ -1,27 +1,26 @@
 package rui.coder.algorithms.problem.byzantineGenerals.paxos;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
  * 产生议题的人
  */
-@AllArgsConstructor
+@Getter
+@Setter
 public class Client {
 
-    @Getter
-    @Setter
-    private Proposer proposer;
+    private String name;
 
-    public Client() {
+    public Client(String name) {
+        this.name = this.getClass().getSimpleName() + name;
     }
 
-    /**
-     *
-     */
-    public void request(){
 
+    /**
+     * Client(客户端) 产生议题， 交付给 Proposer(提倡者)；
+     */
+    public Proposer deliver() {
+        return new Proposer(this);
     }
 }
