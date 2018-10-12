@@ -13,4 +13,5 @@ class DurationTest {
     void ofMinutes() {
         System.out.println(Duration.ofMinutes(10));
     }
+
 }

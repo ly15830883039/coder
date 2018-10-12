@@ -73,4 +73,6 @@ public class IntegerTest {
         int[]a=null;
         a[0]=0;
     }
+
+
 }

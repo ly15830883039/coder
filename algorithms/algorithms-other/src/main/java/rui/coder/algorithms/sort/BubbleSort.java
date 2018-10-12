@@ -1,6 +1,7 @@
 package rui.coder.algorithms.sort;
 
 /**
+ * 冒泡排序
  * @author 赵睿
  */
 public class BubbleSort implements Sort {
@@ -32,8 +33,7 @@ public class BubbleSort implements Sort {
      * 互换
      */
     private void interchange(int [] arr,int first,int last){
-        int temp =0 ;
-        temp=arr[first];
+        int temp=arr[first];
         arr[first]=arr[last];
         arr[last]=temp;
     }

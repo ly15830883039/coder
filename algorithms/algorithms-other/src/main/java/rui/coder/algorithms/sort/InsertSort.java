@@ -1,6 +1,7 @@
 package rui.coder.algorithms.sort;
 
 /**
+ * 插入排序
  * @author 赵睿
  */
 public class InsertSort implements Sort {
