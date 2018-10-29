@@ -6,25 +6,31 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
-public class HashMapTest {
+class HashMapTest {
 
-    HashMap<MockKey, String> hashMap = new HashMap<>();
+    private HashMap<MockKey, String> hashMap = new HashMap<>();
 
     @Test
     void case1() {
         for (int i = 0; i <= 1000; i++) {
-             put(i);
+            put(i);
         }
+
+        System.out.println(hashMap);
+        hashMap.forEach((mockKey, s) -> {
+            System.out.println("key -->  " + mockKey);
+            System.out.println("value -->" + s);
+        });
     }
 
-    public void put(int i){
-        int hash=i*16+1;
-        hashMap.put(new MockKey(hash),hash+"");
+    private void put(int i) {
+        int hash = i * 16 + 1;
+        hashMap.put(new MockKey(hash), hash + "");
     }
 
     @EqualsAndHashCode
     @AllArgsConstructor
-    public static class MockKey {
+    private static class MockKey {
         private int key;
     }
 }
