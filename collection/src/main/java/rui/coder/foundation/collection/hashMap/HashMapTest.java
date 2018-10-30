@@ -44,6 +44,7 @@ class HashMapTest {
     @Test
     @DisplayName("并发put，查看是否线程安全")
     void currentPut() throws InterruptedException {
+        hashMap = new HashMap<>(2048);
         AtomicInteger atomicInteger=new AtomicInteger(0);
 
         CountDownLatch countDownLatch=new CountDownLatch(2);
