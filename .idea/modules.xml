@@ -9,9 +9,8 @@
       <module fileurl="file://$PROJECT_DIR$/concurrent/concurrent.iml" filepath="$PROJECT_DIR$/concurrent/concurrent.iml" />
       <module fileurl="file://$PROJECT_DIR$/design-pattern/design-pattern.iml" filepath="$PROJECT_DIR$/design-pattern/design-pattern.iml" />
       <module fileurl="file://$PROJECT_DIR$/feature/feature.iml" filepath="$PROJECT_DIR$/feature/feature.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/foundation.iml" filepath="$PROJECT_DIR$/.idea/foundation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/foundation-parent.iml" filepath="$PROJECT_DIR$/foundation-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/io/io.iml" filepath="$PROJECT_DIR$/io/io.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jdk7/jdk7.iml" filepath="$PROJECT_DIR$/jdk7/jdk7.iml" />
       <module fileurl="file://$PROJECT_DIR$/jvm/jvm.iml" filepath="$PROJECT_DIR$/jvm/jvm.iml" />
       <module fileurl="file://$PROJECT_DIR$/lang/lang.iml" filepath="$PROJECT_DIR$/lang/lang.iml" />
     </modules>

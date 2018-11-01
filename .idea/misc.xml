@@ -9,20 +9,6 @@
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/algorithms/algs4/pom.xml" />
-        <option value="$PROJECT_DIR$/collection/pom.xml" />
-        <option value="$PROJECT_DIR$/concurrent/pom.xml" />
-        <option value="$PROJECT_DIR$/design-pattern/pom.xml" />
-        <option value="$PROJECT_DIR$/feature/pom.xml" />
-        <option value="$PROJECT_DIR$/io/pom.xml" />
-        <option value="$PROJECT_DIR$/jdk7/pom.xml" />
-        <option value="$PROJECT_DIR$/jvm/pom.xml" />
-        <option value="$PROJECT_DIR$/lang/pom.xml" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-      </set>
-    </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="8" project-jdk-type="JavaSDK" />
   <component name="TaskProjectConfiguration">
