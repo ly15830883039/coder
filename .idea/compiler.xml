@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="algorithms-other" />
+        <module name="algs4" />
+        <module name="collection" />
+        <module name="concurrent" />
+        <module name="design-pattern" />
+        <module name="feature" />
+        <module name="io" />
+        <module name="jdk7" />
+        <module name="jvm" />
+        <module name="lang" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="algorithms" target="1.8" />
+      <module name="algorithms-other" target="1.8" />
+      <module name="algs4" target="1.8" />
+      <module name="collection" target="1.8" />
+      <module name="concurrent" target="1.8" />
+      <module name="design-pattern" target="1.8" />
+      <module name="feature" target="1.8" />
+      <module name="foundation" target="1.8" />
+      <module name="io" target="1.8" />
+      <module name="jdk7" target="7" />
+      <module name="jvm" target="1.8" />
+      <module name="lang" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
