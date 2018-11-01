@@ -21,7 +21,7 @@ class RemoveDuplicateTest {
 
     @AfterEach
     void tearDown() {
-        assertEquals(result, removeDuplicate.alg(str));
+        assertEquals(result, removeDuplicate.alg2(str));
 
     }
 }

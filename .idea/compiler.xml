@@ -8,15 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="algorithms-other" />
-        <module name="algs4" />
-        <module name="collection" />
-        <module name="concurrent" />
-        <module name="design-pattern" />
-        <module name="feature" />
-        <module name="io" />
-        <module name="jdk7" />
-        <module name="jvm" />
-        <module name="lang" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

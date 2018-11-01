@@ -6,12 +6,11 @@ package rui.coder.algorithms.interview.alibaba;
 public class RemoveDuplicate {
 
 
-    public String alg(String str) {
+    String alg(String str) {
         char[] chars = str.toCharArray();
 
         int size = 0; //这个填入上一个index
         int[] ints = new int[chars.length];
-
 
         //游标
         int index = 0;
@@ -19,7 +18,6 @@ public class RemoveDuplicate {
         int right = 0;
         //跨度
         int span = 1;
-
 
         while (index < chars.length) {
             if (chars[index] == chars[index + right + span]) {
@@ -31,7 +29,6 @@ public class RemoveDuplicate {
                         index = ints[size - 1];// 后退一位
                         right = 0;
                         span = span + right + 1;//原始跨度+左移动的位数+右移动的位数
-
                     } else {//跨度出现变化,存在左移的情况，且左移动的这个位数和后面的可以相消
                         index = index + span + right;
                         right = 0;
@@ -41,15 +38,14 @@ public class RemoveDuplicate {
                     }
                 } else {//不存在相同的位数，无需消除
                     if (span == 1) {//跨度没有变化。没有左移的事情的发生
-                        index = index + span + right;
                         ints[size++] = index;//存储这个位置
+                        index = index + span + right;
                         right = 0;
                     } else {//跨度出现变化。但是且不存在相同
                         ints[size++] = index;
                         index = index + size + right;
                         span = 1;
                         right = 0;
-
                     }
                 }
             }
@@ -61,5 +57,37 @@ public class RemoveDuplicate {
 
         return stringBuilder.toString();
 
+    }
+
+    String alg2(String str) {
+        int start = 0, size;
+        while ((size = findContinuous(str, start)) == 0 && start < str.length()) {
+            start++;
+        }
+        if (size != 0) {
+            String temp = continuousCharsToString(str.charAt(start), size);
+            str = str.replaceAll(temp, "");
+            return alg2(str);
+        }
+        return str;
+    }
+
+    private int findContinuous(String string, int start) {
+        int size = 0;
+        while (start + size + 1 < string.length() && string.charAt(start) == string.charAt(start + size + 1)) {
+            size++;
+        }
+        return size;
+    }
+
+    private String continuousCharsToString(char c, int size) {
+        if (size == 0) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i <= size; i++) {
+            builder.append(c);
+        }
+        return builder.toString();
     }
 }
