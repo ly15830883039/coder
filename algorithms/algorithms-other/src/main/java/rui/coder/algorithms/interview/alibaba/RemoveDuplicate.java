@@ -5,59 +5,89 @@ package rui.coder.algorithms.interview.alibaba;
  */
 public class RemoveDuplicate {
 
+    private int size = 0; //这个填入上一个index
+
+    //游标
+    private int index = 0;
+    private int right = 1; //右浮动，相同的跳过的位数； 跳位
+    private int left = 0; //左浮动，从不能消除的列表中获得上一个不重复的游标；退位
 
     String alg(String str) {
         char[] chars = str.toCharArray();
+        int maxIndex = chars.length - 1;
 
-        int size = 0; //这个填入上一个index
-        int[] ints = new int[chars.length];
+        //非同游标列表
+        int[] noSame = new int[chars.length];
+        if (maxIndex <= 1) {
+            return str;
+        }
 
-        //游标
-        int index = 0;
-        //右移动长度
-        int right = 0;
         //跨度
-        int span = 1;
-
-        while (index < chars.length) {
-            if (chars[index] == chars[index + right + span]) {
+        int span;
+        while (index + (span = right - left) <= maxIndex) {
+            if (chars[index] == chars[index + span]) {
+                if (index + span == maxIndex) {
+                    if (size != 0) {
+                        noSame[--size] = 0;
+                    }
+                    break;
+                }
                 //相同右移
                 right++;
             } else {//已经无相同数据
-                if (right > 0) {//存在相同的位数，需要消除
-                    if (span == 1) {//跨度未变化。没有左移的事情发生
-                        index = ints[size - 1];// 后退一位
-                        right = 0;
-                        span = span + right + 1;//原始跨度+左移动的位数+右移动的位数
-                    } else {//跨度出现变化,存在左移的情况，且左移动的这个位数和后面的可以相消
-                        index = index + span + right;
-                        right = 0;
-                        span = 1;
-                        size--;
-                        ints[size] = 0;//后退一位，置空
+                if (left == 0 && right == 1) {//无退位，无跳位
+                    //存储index。
+                    noSame[size++] = index;//存储这个位置
+                    if ((index = index + span) == maxIndex) {//游标漂移
+                        noSame[size++] = index;//放入非同游标列表中
+                        break;//终止当前循环
                     }
-                } else {//不存在相同的位数，无需消除
-                    if (span == 1) {//跨度没有变化。没有左移的事情的发生
-                        ints[size++] = index;//存储这个位置
-                        index = index + span + right;
-                        right = 0;
-                    } else {//跨度出现变化。但是且不存在相同
-                        ints[size++] = index;
-                        index = index + size + right;
-                        span = 1;
-                        right = 0;
+                } else if (left == 0 && right > 1) {//无退位，有跳位
+                    if (size != 0) { //继续退位
+                        int temp = noSame[size - 1];//从非同游标列表取出上一个非同游标
+                        left = temp - index - right + 1;//获得退位位数
+                        index = temp;//游标置为非同游标
+                        right = 1;
+                    } else {
+                        if ((index = index + span) == maxIndex) {//重置游标
+                            noSame[size++] = index;//放入非同游标列表中
+                            break;//终止当前循环
+                        } else {
+                            right = 1;
+                        }
+                    }
+                } else if (left < 0 && right == 1) {//有退位，无跳位
+                    //退位值和原比较对应值不同
+                    if ((index = index + span) == maxIndex) {//游标漂移
+                        noSame[size++] = index;
+                    }
+                    left = 0;//回置退位
+                    right = 1;
+                } else if (left < 0 && right > 1) {//有退位，有跳位
+                    //清理非同游标列表
+                    noSame[--size] = 0;
+                    if (size != 0) { //继续退位
+                        int temp = noSame[size - 1];//从非同游标列表取出上一个非同游标
+                        left = temp - index - right + left + 1;//获得退位位数
+                        index = temp;//游标置为非同游标
+                        right = 1;
+                    } else {
+                        index = index + span;//重置游标
+                        left = 0;
+                        right = 1;
                     }
                 }
             }
         }
+
+
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
-            stringBuilder.append(chars[ints[i]]);
+            stringBuilder.append(chars[noSame[i]]);
         }
-
         return stringBuilder.toString();
-
     }
+
 
     String alg2(String str) {
         int start = 0, size;
