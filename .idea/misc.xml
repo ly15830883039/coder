@@ -11,15 +11,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
-        <option value="$PROJECT_DIR$/algorithms/algorithms-other/pom.xml" />
-        <option value="$PROJECT_DIR$/algorithms/algs4/pom.xml" />
-        <option value="$PROJECT_DIR$/algorithms/pom.xml" />
-        <option value="$PROJECT_DIR$/collection/pom.xml" />
         <option value="$PROJECT_DIR$/design-pattern/pom.xml" />
-        <option value="$PROJECT_DIR$/feature/pom.xml" />
-        <option value="$PROJECT_DIR$/io/pom.xml" />
-        <option value="$PROJECT_DIR$/jvm/pom.xml" />
-        <option value="$PROJECT_DIR$/lang/pom.xml" />
       </set>
     </option>
   </component>
